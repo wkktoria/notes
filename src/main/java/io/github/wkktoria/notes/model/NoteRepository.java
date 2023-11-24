@@ -1,8 +1,21 @@
 package io.github.wkktoria.notes.model;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-@RepositoryRestResource
-interface NoteRepository extends JpaRepository<Note, Integer> {
+import java.util.List;
+import java.util.Optional;
+
+public interface NoteRepository {
+    List<Note> findAll();
+
+    Page<Note> findAll(Pageable pageable);
+
+    Optional<Note> findById(Integer id);
+
+    Note save(Note entity);
+
+    boolean existsById(Integer id);
+
+    void deleteById(Integer id);
 }

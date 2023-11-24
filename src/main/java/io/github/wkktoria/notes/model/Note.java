@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "notes")
-class Note {
+public class Note {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
@@ -13,14 +13,14 @@ class Note {
     private String title;
     private String content;
 
-    Note() {
+    public Note() {
     }
 
     public int getId() {
         return Id;
     }
 
-    void setId(final int id) {
+    public void setId(final int id) {
         Id = id;
     }
 
