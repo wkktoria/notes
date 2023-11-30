@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 class NoteController {
@@ -22,7 +21,7 @@ class NoteController {
     }
 
     @PostMapping("/notes")
-    ResponseEntity<Note> createNote(@Valid @RequestBody Note toCreate) {
+    ResponseEntity<?> createNote(@Valid @RequestBody Note toCreate) {
         logger.info("Creating note");
 
         var result = repository.save(toCreate);
@@ -30,21 +29,21 @@ class NoteController {
     }
 
     @GetMapping(value = "/notes", params = {"!sort", "!page", "!size"})
-    ResponseEntity<List<Note>> readAllNotes() {
+    ResponseEntity<?> readAllNotes() {
         logger.info("Reading all notes");
 
         return ResponseEntity.ok(repository.findAll());
     }
 
     @GetMapping("/notes")
-    ResponseEntity<List<Note>> readAllNotes(Pageable pageable) {
+    ResponseEntity<?> readAllNotes(Pageable pageable) {
         logger.info("Reading all notes (custom pageable)");
 
         return ResponseEntity.ok(repository.findAll(pageable).getContent());
     }
 
     @GetMapping("/notes/{id}")
-    ResponseEntity<Note> readNoteById(@PathVariable int id) {
+    ResponseEntity<?> readNoteById(@PathVariable int id) {
         logger.info("Reading note by id");
 
         return repository.findById(id)
@@ -53,7 +52,7 @@ class NoteController {
     }
 
     @PutMapping("/notes/{id}")
-    ResponseEntity<Note> updateNote(@PathVariable int id, @Valid @RequestBody Note toUpdate) {
+    ResponseEntity<?> updateNote(@PathVariable int id, @Valid @RequestBody Note toUpdate) {
         logger.info("Updating note");
 
         if (!repository.existsById(id)) {
@@ -67,7 +66,7 @@ class NoteController {
     }
 
     @DeleteMapping("/notes/{id}")
-    ResponseEntity<Note> deleteNote(@PathVariable int id) {
+    ResponseEntity<?> deleteNote(@PathVariable int id) {
         logger.info("Deleting note");
 
         if (!repository.existsById(id)) {
